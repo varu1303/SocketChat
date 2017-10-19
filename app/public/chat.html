@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="CHAT">
+        <meta name="author" content="Varun">
+
+        <title>CHAT | ed_CHAT</title>
+        
+        <!---Importing Font ---->
+        <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+        <!-- Bootstrap minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <!-- custom stylesheet -->
+        <link rel="stylesheet" href="style.css">
+        
+    </head>
+    <body>
+        <nav>
+            <p>ed_CHAT!</p>
+            <button type="button" class="btn btn-default" id="load">Load Chat</button>
+            <button type="button" class="btn btn-danger"><a href="index.html">Logout</a></button>
+        </nav>
+        <div id="chat-box">
+            <div id="msg-box">
+                <ul id="msg"></ul>
+            </div>
+            <div id="msg-control">
+                <div class="form-in">
+                  <div class="form-gr">
+                    <input type="text" class="form-control" id="Input" maxlength="100" placeholder="Type your message...." autofocus>
+                  </div>
+                  <button type="submit" class="btn btn-primary" id="send">Send</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- jQuery library -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <!-- Latest compiled JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <!--socket liv -->
+        <script src="/socket.io/socket.io.js"></script>
+        <!--deparam to get the user1 and user2 -->
+        <script src="deparam.js"></script>
+        <!---Custom JS file ---->
+        <script src="io.js"></script>
+    </body>
+</html>
