@@ -10,6 +10,7 @@ db.on('connected', function () {
 
 
 var users = [];
+var available = [];
 var chatsessions = {};
 
 const EventEmitter = require('events');
@@ -64,6 +65,35 @@ io = socketIO(server);
 
 io.on('connection', function(socket) {
     
+/* Available users */
+    
+    socket.on('avail user', function (d) {
+        available.push({id:socket.id, name:d.user});
+        io.emit('new avail', available);
+    });
+    
+    socket.on('unavail user', function (d) {
+
+        var index;
+        available.forEach(function (v,i){
+            if(d.user == v.name){
+                index = i;
+            }
+                
+        });
+        available.splice(index,1);
+        io.emit('new avail', available);
+//        console.log(d.req);
+        
+        var socketID;
+        available.forEach(function (v,i){
+            if(d.req == v.name)
+                socketID = v.id;
+        });        
+
+        io.to(socketID).emit('new req', d.user);
+    })
+    
 /*Saving username in socket on connection*/
     
     socket.on('notify', function(data,callback) {
@@ -79,16 +109,22 @@ io.on('connection', function(socket) {
         if (data.user1.localeCompare(data.user2) < 0) {
             socket.join(data.user1+'_'+data.user2);
             socket.room = data.user1+'_'+data.user2;
-            if(!chatsessions.hasOwnProperty(socket.room))
-                    chatsessions[socket.room] = {};
+            if(!chatsessions.hasOwnProperty(socket.room)){
+                chatsessions[socket.room] = {};                
+                chatsessions[socket.room][socket.userName] = [];
+                chatsessions[socket.room][data.user2] = [];
+            }
         }else{
             socket.join(data.user2+'_'+data.user1);
             socket.room = data.user2+'_'+data.user1;
-            if(!chatsessions.hasOwnProperty(socket.room))
-                    chatsessions[socket.room] = {};
+            if(!chatsessions.hasOwnProperty(socket.room)){
+                chatsessions[socket.room] = {};
+                chatsessions[socket.room][socket.userName] = [];
+                chatsessions[socket.room][data.user2] = [];
+            }
         }
 
-        chatsessions[socket.room][socket.userName] = [];
+        
 
         
         timestamp = moment().format("MMMM Do YYYY, h:mm:ss a");
@@ -143,17 +179,35 @@ io.on('connection', function(socket) {
     
     socket.on('disconnect', function() {
 
-        var i = users.indexOf(socket.userName);
-        users.splice(i,1);
-        //
-        myEmitter.emit('save', {room: socket.room, user: socket.userName});
-        //
-        timestamp = moment().format("MMMM Do YYYY, h:mm:ss a");
-        socket.broadcast.to(socket.room).emit('user left', {
-            name: socket.userName,
-            time: timestamp
+//if browser closes on first page
+        var index;
+        available.forEach(function (v,i){
+            if(socket.id == v.id){
+                index = i;
+            }
+                
         });
+
+        if(index != undefined){
+            available.splice(index,1);
+            io.emit('new avail', available);
+        }
+//
+
+        var i = users.indexOf(socket.userName);
+        if(i != -1){
+            users.splice(i,1);
+            //
+            myEmitter.emit('save', {room: socket.room, user: socket.userName});
+            //
+            timestamp = moment().format("MMMM Do YYYY, h:mm:ss a");
+            socket.broadcast.to(socket.room).emit('user left', {
+                name: socket.userName,
+                time: timestamp
+            });
+        }
     });
+    
     
     
 

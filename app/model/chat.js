@@ -29,17 +29,17 @@ module.exports = {
                 tStamp : v.timestamp
             });
 
-            message.save()
-                .then(function() {
-                    console.log('SAVED!')
-            })
-                .catch(function(){
-                    e = true;
-                    console.log('ERROR IN SAVING');
-            });
+            message.save();
+//                .then(function() {
+//                    console.log('SAVED!')
+//            })
+//                .catch(function(){
+//                    e = true;
+//                    console.log('ERROR IN SAVING');
+//            });
         });
         
-        return e;
+//        return e;
 
     },
     

@@ -95,6 +95,7 @@ $(document).ready(function () {
         messageEntry.append('<li>'+'<span class="time">'+'@'+data.time+'</span>'+'<span class="user">'+' '+data.user+'</span>'+':'+data.message+'</li>');
         autoScroll();
     });
+    
 
 /*Printing welcome message on connection */
     socket.on('connect', function() {
@@ -125,9 +126,7 @@ $(document).ready(function () {
         autoScroll();
     });
     
-    socket.on('disconnect', function() {
-            console.log('disconnected');
-    });
+
     
 /*typing or not notification */
     

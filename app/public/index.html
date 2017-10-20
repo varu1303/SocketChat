@@ -16,6 +16,13 @@
         <h1><strong>ed</strong> CHAT!!</h1>
         
         <div class="container">
+            <div id="log">
+                <label>Be available as. . </label>
+                <input type="text" placeholder="Your username " id="main-read">
+                <button class="btn btn-primary" id="log-btn" disabled>LOGIN</button>
+                <button class="btn btn-danger" id="out-btn" disabled>LOGOUT</button>
+            </div>
+
             <form class="form-inline" action="/chat.html">
               <div class="form-group">
                 <label for="exampleInputName2">YO!</label>
@@ -25,13 +32,27 @@
                 <label for="exampleInputEmail2">wants to chat with</label>
                 <input type="text" class="form-control" id="exampleInputEmail2" name="user2" placeholder="Friend's username">
               </div>
-              <button type="submit" class="btn btn-default">Launch One-to-One Chatroom</button>
+              <button type="submit" class="btn btn-primary" disabled id="join-btn">Launch One-to-One Chatroom</button>
             </form>
+            <div id="avail-list">
+                <h3>AVAILABLE USERS: 0</h3>
+                <ul>
+                </ul>
+            </div>
+            <div id="req-list">
+                <h3>CHAT REQUESTS</h3>
+                <ul>
+                </ul>
+            </div>
         </div>
         
         <!-- jQuery library -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <!-- Latest compiled JavaScript -->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <!--socket liv -->
+        <script src="/socket.io/socket.io.js"></script> 
+        <!--Custom JS for index-->
+        <script src="avail.js"></script>
     </body>
 </html>
