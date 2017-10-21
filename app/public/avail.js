@@ -50,6 +50,10 @@ $(document).ready(function() {
 
     })
     
+    socket.on('clear req', function () {
+         $("#req-list ul").empty();
+    })
+    
     socket.on('new avail', function(d) {
         $("#avail-list ul").empty();
         $("#avail-list h3").text('Available Users: '+ d.length);

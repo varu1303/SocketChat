@@ -85,13 +85,24 @@ io.on('connection', function(socket) {
         io.emit('new avail', available);
 //        console.log(d.req);
         
-        var socketID;
-        available.forEach(function (v,i){
-            if(d.req == v.name)
-                socketID = v.id;
-        });        
+        if(d.req != undefined) {
+            
+            var socketID;
+            available.forEach(function (v,i){
+                if(d.req == v.name)
+                    socketID = v.id;
+            });        
 
-        io.to(socketID).emit('new req', d.user);
+            io.to(socketID).emit('new req', d.user);
+            
+        } else {
+            
+            socket.emit('clear req');
+        }
+        
+
+        
+        
     })
     
 /*Saving username in socket on connection*/
